@@ -45,5 +45,7 @@ build() {
   cd "$srcdir"
   mkdir -p $pkgdir/usr/share/octave/packages
   mkdir -p $pkgdir/usr/lib/octave/packages
-  cp miscellaneous-$pkgver.tar.gz $pkgdir/usr/share/octave/miscellaneous.tar.gz
+  mkdir -p builddir
+  echo "pkg build -nodeps builddir miscellaneous-$pkgver.tar.gz" | octave --silent
+  cp builddir/miscellaneous-$pkgver.tar.gz $pkgdir/usr/share/octave/miscellaneous.tar.gz
 }
