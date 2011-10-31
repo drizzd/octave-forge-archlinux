@@ -1,0 +1,49 @@
+# Submitter: Dknight
+# Maintainer: Maksim Sipos <msipos@mailc.net>
+pkgname=octave-miscellaneous
+pkgver=1.0.11
+pkgrel=1
+pkgdesc="Miscellaneous tools that don't fit somewhere else.
+
+miscellaneous
+ apply
+ asci
+ cell2cell
+ partarray
+ csv2latex
+ chebyshevpoly
+ hermitepoly
+ infoskeleton
+ laguerrepoly
+ legendrepoly
+ match
+ nze
+ reduce
+ slurp_file
+ units
+ zagzig
+ zigzag
+ csvconcat
+ csvexplode
+ server
+ publish
+"
+arch=(any)
+url="http://octave.sourceforge.net/miscellaneous/"
+license=('GPL2')
+depends=('octave>=3.2.4' 'ncurses')
+makedepends=()
+optdepends=()
+backup=()
+options=()
+install=octave-miscellaneous.install
+source=("http://downloads.sourceforge.net/octave/miscellaneous-$pkgver.tar.gz")
+noextract=("miscellaneous-$pkgver.tar.gz")
+md5sums=('278c3a0faeb146b042daf2f843084c08')
+
+build() {
+  cd "$srcdir"
+  mkdir -p $pkgdir/usr/share/octave/packages
+  mkdir -p $pkgdir/usr/lib/octave/packages
+  cp miscellaneous-$pkgver.tar.gz $pkgdir/usr/share/octave/miscellaneous.tar.gz
+}

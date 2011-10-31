@@ -1,0 +1,27 @@
+# Maintainer: Clemens Buchacher <drizzd@aon.at>
+pkgname=octave-@@NAME@@
+pkgver=@@VERSION@@
+pkgrel=1
+pkgdesc="@@DESCRIPTION@@
+
+@@INDEX@@
+"
+arch=(any)
+url="http://octave.sourceforge.net/@@NAME@@/"
+license=(@@LICENSE@@)
+depends=(@@DEPENDS@@)
+makedepends=()
+optdepends=()
+backup=()
+options=()
+install=octave-@@NAME@@.install
+source=("http://downloads.sourceforge.net/octave/@@NAME@@-$pkgver.tar.gz")
+noextract=("@@NAME@@-$pkgver.tar.gz")
+md5sums=('@@MD5SUMS@@')
+
+build() {
+  cd "$srcdir"
+  mkdir -p $pkgdir/usr/share/octave/packages
+  mkdir -p $pkgdir/usr/lib/octave/packages
+  echo "pkg prefix $pkgdir/usr/share/octave/packages $pkgdir/usr/lib/octave/packages; pkg install -local @@NAME@@-$pkgver.tar.gz" | octave --silent
+}
