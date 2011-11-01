@@ -175,7 +175,7 @@ Utility
 "
 arch=(any)
 url="http://octave.sourceforge.net/signal/"
-license=('GPL2')
+license=('GPL')
 depends=('octave>2.9.9' 'octave-optim>=1.0.0' 'octave-specfun')
 makedepends=()
 optdepends=()

@@ -26,7 +26,7 @@ Special
 "
 arch=(any)
 url="http://octave.sourceforge.net/specfun/"
-license=('GPL2')
+license=('GPL')
 depends=('octave>=2.9.7')
 makedepends=()
 optdepends=()

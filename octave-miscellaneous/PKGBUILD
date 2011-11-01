@@ -31,7 +31,7 @@ miscellaneous
 "
 arch=(any)
 url="http://octave.sourceforge.net/miscellaneous/"
-license=('GPL2')
+license=('GPL')
 depends=('octave>=3.2.4')
 makedepends=('ncurses')
 optdepends=()

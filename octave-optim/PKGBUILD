@@ -48,7 +48,7 @@ Examples
 "
 arch=(any)
 url="http://octave.sourceforge.net/optim/"
-license=('GPL2' 'FDL')
+license=('GPL' 'FDL')
 depends=('octave>=2.9.7' 'octave-miscellaneous>=1.0.11' 'octave-struct>=1.0.9')
 makedepends=()
 optdepends=()
