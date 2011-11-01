@@ -1,6 +1,8 @@
+_pack=@@NAME@@
+
 ## arg 1:  the new package version
 post_install() {
-  echo "pkg prefix /usr/share/octave/packages /usr/lib/octave/packages; pkg install -global /usr/share/octave/@@NAME@@.tar.gz" | octave --silent
+  echo "pkg prefix /usr/share/octave/packages /usr/lib/octave/packages; pkg install -global /usr/share/octave/$_pack.tar.gz" | octave --silent
 }
 
 ## arg 1:  the new package version
@@ -12,5 +14,5 @@ post_upgrade() {
 
 ## arg 1:  the old package version
 post_remove() {
-  echo "pkg prefix /usr/share/octave/packages /usr/lib/octave/packages; pkg uninstall @@NAME@@" | octave --silent
+  echo "pkg prefix /usr/share/octave/packages /usr/lib/octave/packages; pkg uninstall $_pack" | octave --silent
 }
