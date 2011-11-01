@@ -23,6 +23,7 @@ build() {
   cd "$srcdir"
   mkdir -p $pkgdir/usr/share/octave/packages
   mkdir -p $pkgdir/usr/lib/octave/packages
+  mkdir -p builddir
   echo "pkg build -nodeps builddir @@NAME@@-$pkgver.tar.gz" | octave --silent
   cp builddir/@@NAME@@-$pkgver.tar.gz $pkgdir/usr/share/octave/@@NAME@@.tar.gz
 }
