@@ -2,7 +2,7 @@
 # Maintainer: Maksim Sipos <msipos@mailc.net>
 pkgname=octave-miscellaneous
 pkgver=1.0.11
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous tools that don't fit somewhere else.
 
 miscellaneous
