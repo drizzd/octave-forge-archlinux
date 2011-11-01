@@ -1,5 +1,6 @@
 # Submitter: Dknight
-# Maintainer: Maksim Sipos <msipos@mailc.net>
+# Contributor: Maksim Sipos <msipos@mailc.net>
+# Maintainer: Clemens Buchacher <drizzd@aon.at>
 pkgname=octave-miscellaneous
 pkgver=1.0.11
 pkgrel=2
