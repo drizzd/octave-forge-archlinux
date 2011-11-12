@@ -1,12 +1,9 @@
 # Maintainer: Clemens Buchacher <drizzd@aon.at>
-$_pack=@@NAME@@
+_pack=@@NAME@@
 pkgname=octave-$_pack
 pkgver=@@VERSION@@
 pkgrel=1
-pkgdesc="@@DESCRIPTION@@
-
-@@INDEX@@
-"
+pkgdesc="@@DESCRIPTION@@"
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=(@@LICENSE@@)
@@ -16,8 +13,9 @@ optdepends=()
 backup=()
 options=()
 install=$pkgname.install
+_archive=$_pack-$pkgver.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_pack-$pkgver.tar.gz")
-noextract=("$_pack-$pkgver.tar.gz")
+noextract=("$_archive")
 md5sums=('@@MD5SUMS@@')
 
 build() {
@@ -25,6 +23,6 @@ build() {
   mkdir -p $pkgdir/usr/share/octave/packages
   mkdir -p $pkgdir/usr/lib/octave/packages
   mkdir -p builddir
-  echo "pkg build -nodeps builddir $_pack-$pkgver.tar.gz" | octave --silent
-  cp builddir/$_pack-$pkgver.tar.gz $pkgdir/usr/share/octave/$_pack.tar.gz
+  echo "pkg build -nodeps builddir $_archive" | octave --silent
+  cp builddir/$_archive $pkgdir/usr/share/octave/$_pack.tar.gz
 }
