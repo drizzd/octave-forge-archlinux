@@ -1,0 +1,31 @@
+#!/bin/sh
+
+usage()
+{
+	echo "usage: $(basename $0) pack version" >&2
+}
+
+if test $# -ne 2
+then
+	usage
+	exit 1
+fi
+
+pack=$1
+version=$2
+
+pkgname=octave-$pack
+
+if test -e "$pkgname"
+then
+	echo "error: directory already exists: $pkgname" >&2
+	exit 1
+fi
+
+mkdir "$pkgname"
+cp PKGBUILD.source "$pkgname/PKGBUILD"
+cp octave-pkgname.install "$pkgname/$pkgname.install"
+
+cd "$pkgname"
+sed -i "s#@@NAME@@#$pack#g" *
+sed -i "s#@@VERSION@@#$version#g" *
