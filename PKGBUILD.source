@@ -14,14 +14,14 @@ backup=()
 options=()
 install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
-source=("http://downloads.sourceforge.net/octave/$_pack-$pkgver.tar.gz")
+source=("http://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
 md5sums=('@@MD5SUMS@@')
 
 build() {
   cd "$srcdir"
   mkdir -p builddir
-  octave -q -f --eval "pkg build -nodeps builddir $_archive"
+  octave -q -f --eval "pkg build -verbose -nodeps builddir $_archive"
 }
 
 package() {
