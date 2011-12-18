@@ -2,12 +2,12 @@
 _pack=specfun
 pkgname=octave-$_pack
 pkgver=1.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Special functions including ellipitic functions, etc"
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL')
-depends=('octave>=2.9.7')
+depends=('octave>=3.4.0')
 makedepends=()
 optdepends=()
 backup=()
