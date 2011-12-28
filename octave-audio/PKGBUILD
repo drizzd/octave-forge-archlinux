@@ -6,6 +6,7 @@ pkgdesc="Audio recording, processing and playing tools."
 arch=(any)
 url="http://octave.sourceforge.net/audio/"
 license=('GPL')
+groups=('octave-forge')
 depends=('octave>=2.9.7')
 makedepends=()
 optdepends=()

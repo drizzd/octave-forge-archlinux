@@ -7,6 +7,7 @@ pkgdesc="Library with functions useful for numerical computation in classical me
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL3')
+groups=('octave-forge')
 depends=('octave>=3.4.0')
 makedepends=()
 optdepends=()

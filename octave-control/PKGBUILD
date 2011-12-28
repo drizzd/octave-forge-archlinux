@@ -7,6 +7,7 @@ pkgdesc="Octave control systems package based on the proven SLICOT library"
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL3')
+groups=('octave-forge')
 depends=('octave>=3.3.90')
 makedepends=('gcc-fortran')
 optdepends=()

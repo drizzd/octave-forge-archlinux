@@ -6,6 +6,7 @@ pkgdesc="Non-linear optimization toolkit."
 arch=(any)
 url="http://octave.sourceforge.net/optim/"
 license=('GPL' 'FDL')
+groups=('octave-forge')
 depends=('octave>=2.9.7' 'octave-miscellaneous>=1.0.10' 'octave-struct>=1.0.9')
 makedepends=()
 optdepends=()

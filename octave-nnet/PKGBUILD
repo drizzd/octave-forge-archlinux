@@ -7,6 +7,7 @@ pkgdesc="The Octave-forge Nnet package for working with Neural Networks."
 arch=('i686' 'x86_64')
 url="http://octave.sourceforge.net/$_pack/index.html"
 license=('GPL')
+groups=('octave-forge')
 depends=('octave')
 makedepends=()
 optdepends=()

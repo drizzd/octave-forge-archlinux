@@ -7,6 +7,7 @@ pkgdesc="Additional linear algebra code, including general SVD and matrix functi
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL3')
+groups=('octave-forge')
 depends=('octave>=3.2.3')
 makedepends=()
 optdepends=()

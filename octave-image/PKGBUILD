@@ -121,6 +121,7 @@ Region-based and block processing
 arch=(any)
 url="http://octave.sourceforge.net/image/"
 license=('GPL')
+groups=('octave-forge')
 depends=('octave>=3.2.0' 'libjpeg' 'libpng')
 makedepends=('gcc-fortran')
 optdepends=()

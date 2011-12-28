@@ -9,6 +9,7 @@ pkgdesc="Miscellaneous tools that don't fit somewhere else."
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL')
+groups=('octave-forge')
 depends=('octave>=3.2.4')
 makedepends=('ncurses')
 optdepends=()

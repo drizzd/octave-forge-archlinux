@@ -6,6 +6,7 @@ pkgdesc="Signal processing tools, including filtering, windowing and display fun
 arch=(any)
 url="http://octave.sourceforge.net/signal/"
 license=('GPL')
+groups=('octave-forge')
 depends=('octave>2.9.9' 'octave-optim>=1.0.0' 'octave-specfun' 'octave-control' 'octave-audio')
 makedepends=()
 optdepends=()

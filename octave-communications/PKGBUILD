@@ -7,6 +7,7 @@ pkgdesc="Digital Communications, Error Correcting Codes (Channel Code), Source C
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL')
+groups=('octave-forge')
 depends=('octave>=3.4.0' 'octave-signal>=1.0.0' 'octave-image')
 makedepends=()
 optdepends=()
