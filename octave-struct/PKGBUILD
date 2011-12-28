@@ -2,20 +2,7 @@
 pkgname=octave-struct
 pkgver=1.0.9
 pkgrel=1
-pkgdesc="Additional Structure manipulations functions.
-
-Structure handling
- getfields
- setfields
- tars
- arefields
- fields2cell
- cell2fields
- fieldempty
- structcat
-Tests
- test_struct
-"
+pkgdesc="Additional Structure manipulations functions."
 arch=(any)
 url="http://octave.sourceforge.net/struct/"
 license=('GPL')
