@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+for i in octave-miscellaneous octave-specfun octave-struct octave-optim \
+	octave-audio octave-control octave-signal octave-communications \
+	octave-geometry octave-image octave-linear-algebra octave-mechanics \
+	octave-nnet octave-statistics
+do
+	(
+		cd "$i"
+		rm -f *.pkg.tar.xz
+		makepkg -f -s -i --noconfirm
+	)
+done
