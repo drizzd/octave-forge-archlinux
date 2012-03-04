@@ -1,14 +1,14 @@
-# Maintainer: Clemens Buchacher <drizzd@aon.at>
+# Maintainer: Denis Fokin <foks.ua@gmail.com>
 _pack=symbolic
 pkgname=octave-$_pack
 pkgver=1.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Symbolic toolbox based on GiNaC and CLN."
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL')
 groups=('octave-forge')
-depends=('octave>=3.1.55')
+depends=('octave>=3.1.55' 'ginac>=1.6.0')
 makedepends=()
 optdepends=()
 backup=()
