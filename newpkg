@@ -2,19 +2,78 @@
 
 usage()
 {
-	echo "usage: $(basename $0) pack version" >&2
+	echo "usage: $(basename $0) pack" >&2
 }
 
-if test $# -ne 2
+geturl()
+{
+	if ! wget --quiet -O "$1" "$2"
+	then
+		echo "error: download failed: $2"
+	fi
+}
+
+sedesc()
+{
+	echo "$1" | sed -e 's/\(\.\|\/\|\*\|\[\|\]\|\\\)/\\&/g'
+}
+
+octave_to_arch_license()
+{
+	case "$1" in
+	"GPL version 2")
+		echo GPL2
+		;;
+	"GPL version 2 or later")
+		echo GPL
+		;;
+	"GPL version 3")
+		echo GPL3
+		;;
+	"GPL version 3 or later")
+		echo GPL3
+		;;
+	GFDL)
+		echo FDL
+		;;
+	BSD | GPL | GPL2 | GPL3 | LGPL)
+		echo "$1"
+		;;
+	*)
+		return 1
+		;;
+	esac
+
+	return 0
+}
+
+try_convert()
+{
+	echo "$1" |
+	sed 's/ and /\n/g' |
+	{
+		first=true
+		while read octlic
+		do
+			archlic=$(octave_to_arch_license "$octlic") || return 1
+
+			$first || echo -n " "
+			echo -n "'$archlic'"
+			first=false
+		done;
+	}
+
+	return 0
+}
+
+if test $# -ne 1
 then
 	usage
 	exit 1
 fi
 
-pack=$1
-version=$2
-
-pkgname=octave-$pack
+_pack=$1
+pkgname=octave-$_pack
 
 if test -e "$pkgname"
 then
@@ -27,5 +86,70 @@ cp PKGBUILD.source "$pkgname/PKGBUILD"
 cp octave-pkgname.install "$pkgname/$pkgname.install"
 
 cd "$pkgname"
-sed -i "s#@@NAME@@#$pack#g" *
-sed -i "s#@@VERSION@@#$version#g" *
+
+version=$(
+	geturl - "http://octave.sourceforge.net/$_pack/index.html" |
+	sed -n 's/.*Package Version:.*<td>\([^<]\+\)<\/td>.*/\1/p' |
+	head -1
+)
+if test -z "$version"
+then
+	echo "error: could not determine package version" >&2
+	exit 1
+fi
+echo "found version $version"
+
+_archive=$_pack-$version.tar.gz
+if ! geturl "$_archive" "http://downloads.sourceforge.net/octave/$_archive"
+then
+	exit 1
+fi
+
+dfile=$(
+	tar tzf "$_archive" |
+	grep "\<DESCRIPTION$"
+)
+description=$(
+	tar xzfO "$_archive" "$dfile" |
+	sed -n 's/^Description: //p'
+)
+depends=$(
+	tar xzfO "$_archive" "$dfile" |
+	sed -n 's/^Depends: //p' |
+	sed 's/, /\n/g' |
+	{
+		first=true
+		while read package version
+		do
+			if test "$package" != octave
+			then
+				package=octave-$package
+			fi
+			$first || echo -n " "
+			echo -n "'$package $version'" | sed 's/[ ()]//g'
+			first=false
+		done
+	}
+)
+license=$(
+	tar xzfO "$_archive" "$dfile" |
+	sed -n 's/^License: //p'
+)
+md5sum=$(md5sum "$_archive" | cut -f1 -d' ')
+
+echo depends: $depends
+echo license: $license
+
+if ! archlicense="$(try_convert "$license")"
+then
+	archlicense="'custom:$license'"
+fi
+
+sed \
+	-e "s#@@NAME@@#$(sedesc "$_pack")#g" \
+	-e "s#@@VERSION@@#$(sedesc "$version")#g" \
+	-e "s#@@DESCRIPTION@@#$(sedesc "$description")#g" \
+	-e "s#@@LICENSE@@#$(sedesc "$archlicense")#g" \
+	-e "s#@@DEPENDS@@#$(sedesc "$depends")#g" \
+	-e "s#@@MD5SUMS@@#$(sedesc "$md5sum")#g" \
+	-i PKGBUILD "$pkgname.install"

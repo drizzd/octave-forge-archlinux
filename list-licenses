@@ -1,0 +1,12 @@
+#!/bin/sh
+
+ls -1d octave-*/ |
+sed 's/^octave-//; s#/$##g' |
+grep -v '\-svn$' |
+while read x
+do
+	archive=$(echo "octave-$x"/"$x"-*[0-9].tar.gz)
+	desc=$(tar tzf "$archive" | grep "\<DESCRIPTION$")
+	tar xzfO "$archive" "$desc" |
+	(echo -n "$x: "; sed -n 's/^License: //p')
+done
