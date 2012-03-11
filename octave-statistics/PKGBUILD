@@ -8,7 +8,7 @@ pkgrel=2
 pkgdesc="Additional statistics functions for octave."
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
-license=('GPL' 'GPL3' 'custom:see individual files')
+license=('GPL' 'GPL3')
 groups=('octave-forge')
 depends=('octave>=2.9.7' 'octave-miscellaneous')
 makedepends=()
