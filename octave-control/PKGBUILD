@@ -1,7 +1,7 @@
 # Maintainer: Clemens Buchacher <drizzd@aon.at>
 _pack=control
 pkgname=octave-$_pack
-pkgver=2.2.5
+pkgver=2.3.50
 pkgrel=1
 pkgdesc="Octave control systems package based on the proven SLICOT library"
 arch=(any)
@@ -17,7 +17,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-md5sums=('f20ebe81be2a3acf153aca8049b60a5f')
+md5sums=('a9deb6cfcd08641cb1a442fff5af6f83')
 
 build() {
   cd "$srcdir"
