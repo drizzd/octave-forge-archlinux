@@ -97,7 +97,6 @@ then
 	echo "error: could not determine package version" >&2
 	exit 1
 fi
-echo "found version $version"
 
 _archive=$_pack-$version.tar.gz
 if ! geturl "$_archive" "http://downloads.sourceforge.net/octave/$_archive"
@@ -137,13 +136,14 @@ license=$(
 )
 md5sum=$(md5sum "$_archive" | cut -f1 -d' ')
 
-echo depends: $depends
-echo license: $license
-
 if ! archlicense="$(try_convert "$license")"
 then
 	archlicense="'custom:$license'"
 fi
+
+echo "version: $version"
+echo "depends: $depends"
+echo "license: $archlicense"
 
 sed \
 	-e "s#@@NAME@@#$(sedesc "$_pack")#g" \
