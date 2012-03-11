@@ -50,7 +50,7 @@ octave_to_arch_license()
 try_convert()
 {
 	echo "$1" |
-	sed 's/ and /\n/g' |
+	sed -e 's/(see\( individual\)\? files)//' -e 's/ and /\n/g' |
 	{
 		first=true
 		while read octlic
@@ -60,10 +60,8 @@ try_convert()
 			$first || echo -n " "
 			echo -n "'$archlic'"
 			first=false
-		done;
+		done
 	}
-
-	return 0
 }
 
 if test $# -ne 1
@@ -138,7 +136,7 @@ md5sum=$(md5sum "$_archive" | cut -f1 -d' ')
 
 if ! archlicense="$(try_convert "$license")"
 then
-	archlicense="'custom:$license'"
+	archlicense="'custom'"
 fi
 
 echo "version: $version"
