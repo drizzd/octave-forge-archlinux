@@ -3,14 +3,14 @@
 # Maintainer: Clemens Buchacher <drizzd@aon.at>
 _pack=statistics
 pkgname=octave-$_pack
-pkgver=1.1.0
-pkgrel=2
-pkgdesc="Additional statistics functions for octave."
+pkgver=1.1.2
+pkgrel=1
+pkgdesc="Additional statistics functions for Octave."
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
-license=('GPL' 'GPL3')
+license=('custom')
 groups=('octave-forge')
-depends=('octave>=2.9.7' 'octave-miscellaneous')
+depends=('octave>=2.9.7' 'octave-io>=1.0.18')
 makedepends=()
 optdepends=()
 backup=()
@@ -19,7 +19,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-md5sums=('908d4d346528711f772dbb53057cd0b6')
+md5sums=('cd05bc15767f57699cd2f42fcc837472')
 
 build() {
   cd "$srcdir"
