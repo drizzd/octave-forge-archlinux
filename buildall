@@ -3,9 +3,9 @@
 set -e
 
 for i in octave-miscellaneous octave-specfun octave-struct octave-optim \
-	octave-audio octave-control octave-signal octave-communications \
-	octave-geometry octave-image octave-linear-algebra octave-mechanics \
-	octave-nnet octave-statistics
+	octave-audio octave-control octave-signal octave-image \
+	octave-communications octave-linear-algebra octave-mechanics \
+	octave-nnet octave-io octave-statistics octave-geometry
 do
 	(
 		cd "$i"
