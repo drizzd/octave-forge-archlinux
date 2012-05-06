@@ -21,8 +21,10 @@ md5sums=()
 
 _svntrunk=("https://octave.svn.sourceforge.net/svnroot/octave/trunk/octave-forge")
 _svnmod=("main/$_pack")
-_target=$_pack-svn
+_target=$_pack-export
 _archive=$_target-$pkgver.tar.gz
+_prefix=/usr/share/octave/packages
+_libdir=/usr/lib/octave/packages
 
 build() {
   cd "$srcdir"
@@ -46,7 +48,7 @@ build() {
 
   rm -rf "builddir"
   mkdir -p builddir
-  octave -q -f --eval "pkg build -verbose -nodeps builddir $_archive"
+  octave -q -f --eval "pkg prefix $_prefix $_libdir; pkg build -verbose -nodeps builddir $_archive"
 }
 
 package() {
