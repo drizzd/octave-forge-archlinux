@@ -138,7 +138,7 @@ fi
 
 echo "version: $version"
 echo "depends: $depends"
-echo "license: $archlicense"
+echo "license: $archlicense ($license)"
 
 sed \
 	-e "s#@@NAME@@#$(sedesc "$_pack")#g" \
