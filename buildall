@@ -6,7 +6,7 @@ for i in octave-miscellaneous octave-specfun octave-struct octave-optim \
 	octave-audio octave-control octave-image octave-signal \
 	octave-communications octave-linear-algebra octave-mechanics \
 	octave-nnet octave-io octave-statistics octave-geometry \
-	octave-queueing
+	octave-queueing octave-strings
 do
 	(
 		cd "$i"
