@@ -70,6 +70,17 @@ fi
 _pack=$1
 pkgname=octave-$_pack
 
+version=$(
+	geturl - "http://octave.sourceforge.net/$_pack/index.html" |
+	sed -n 's/.*Package Version:.*<td>\([^<]\+\)<\/td>.*/\1/p' |
+	head -1
+)
+if test -z "$version"
+then
+	echo "error: could not determine package version" >&2
+	exit 1
+fi
+
 if test -e "$pkgname"
 then
 	echo "error: directory already exists: $pkgname" >&2
@@ -81,17 +92,6 @@ cp PKGBUILD.source "$pkgname/PKGBUILD"
 cp octave-pkgname.install "$pkgname/$pkgname.install"
 
 cd "$pkgname"
-
-version=$(
-	geturl - "http://octave.sourceforge.net/$_pack/index.html" |
-	sed -n 's/.*Package Version:.*<td>\([^<]\+\)<\/td>.*/\1/p' |
-	head -1
-)
-if test -z "$version"
-then
-	echo "error: could not determine package version" >&2
-	exit 1
-fi
 
 _archive=$_pack-$version.tar.gz
 if ! geturl "$_archive" "http://downloads.sourceforge.net/octave/$_archive"
