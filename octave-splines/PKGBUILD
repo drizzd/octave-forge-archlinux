@@ -1,14 +1,21 @@
+#
 # Maintainer: Clemens Buchacher <drizzd@aon.at>
+#
+# You can use the newpkg script from
+# https://github.com/drizzd/octave-forge-archlinux to automatically generate
+# new octave-forge PKGBUILDs or update existing ones. Patches welcome.
+#
+
 _pack=splines
 pkgname=octave-$_pack
-pkgver=1.0.7
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="Additional Cubic spline functions."
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('custom')
 groups=('octave-forge')
-depends=('octave>=2.9.7')
+depends=('octave>=3.6.0')
 makedepends=()
 optdepends=()
 backup=()
@@ -17,7 +24,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-md5sums=('6fbe9bd3c8b8ee5199d3866599409b1b')
+md5sums=('1ba01dceacdacf007fb3090435d4deb2')
 
 build() {
   cd "$srcdir"
