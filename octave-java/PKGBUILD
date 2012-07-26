@@ -1,4 +1,5 @@
-#
+# Author: Michael Goffioul <michael[d]goffioul[a]gmail[d]com>
+# Submitter: David Runge <david[d]runge[a]frqrec[d]com>
 # Maintainer: Clemens Buchacher <drizzd@aon.at>
 #
 # You can use the newpkg script from
@@ -9,13 +10,13 @@
 _pack=java
 pkgname=octave-$_pack
 pkgver=1.2.8
-pkgrel=1
+pkgrel=3
 pkgdesc="Provides Java interface with OO-like Java objects manipulation"
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL')
 groups=('octave-forge')
-depends=('octave>=3.2.0' 'java-runtime')
+depends=('octave>=3.2.0' 'java-runtime-headless')
 makedepends=('java-environment')
 optdepends=()
 backup=()
