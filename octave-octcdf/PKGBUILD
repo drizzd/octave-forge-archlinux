@@ -9,7 +9,7 @@ url="http://octave.sourceforge.net/$_pack/"
 license=('GPL')
 groups=('octave-forge')
 depends=('octave>=3.4.0')
-makedepends=()
+makedepends=('netcdf')
 optdepends=()
 backup=()
 options=()
