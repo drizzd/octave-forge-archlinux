@@ -99,6 +99,43 @@ then
 	exit 1
 fi
 
+get_dep() {
+	assume_octave=
+	while test $# -gt 0
+	do
+		case $1 in
+		--octave)
+			assume_octave=YesPlease
+			;;
+		*)
+			break
+			;;
+		esac
+		shift
+	done
+	label="$1"
+
+	sed -n "s/^$label: //p" |
+	sed 's/, /\n/g' |
+	{
+		first=true
+		while read package version
+		do
+			if test -n "$assume_octave" -a "$package" != octave
+			then
+				package=octave-$package
+			else
+				# Arch puts header files with the regular
+				# package.
+				package=$(echo "$package" | sed 's/-dev\(el\)\?$//')
+			fi
+			$first || echo -n " "
+			echo -n "'$package $version'" | sed 's/[ ()]//g'
+			first=false
+		done
+	}
+}
+
 dfile=$(
 	tar tzf "$_archive" |
 	grep "\<DESCRIPTION$"
@@ -107,24 +144,8 @@ description=$(
 	tar xzfO "$_archive" "$dfile" |
 	sed -n 's/^Description: //p'
 )
-depends=$(
-	tar xzfO "$_archive" "$dfile" |
-	sed -n 's/^Depends: //p' |
-	sed 's/, /\n/g' |
-	{
-		first=true
-		while read package version
-		do
-			if test "$package" != octave
-			then
-				package=octave-$package
-			fi
-			$first || echo -n " "
-			echo -n "'$package $version'" | sed 's/[ ()]//g'
-			first=false
-		done
-	}
-)
+depends=$(tar xzfO "$_archive" "$dfile" | get_dep --octave Depends)
+makedepends=$(tar xzfO "$_archive" "$dfile" | get_dep BuildRequires)
 license=$(
 	tar xzfO "$_archive" "$dfile" |
 	sed -n 's/^License: //p'
@@ -146,5 +167,6 @@ sed \
 	-e "s#@@DESCRIPTION@@#$(sedesc "$description")#g" \
 	-e "s#@@LICENSE@@#$(sedesc "$archlicense")#g" \
 	-e "s#@@DEPENDS@@#$(sedesc "$depends")#g" \
+	-e "s#@@MAKEDEPENDS@@#$(sedesc "$makedepends")#g" \
 	-e "s#@@MD5SUMS@@#$(sedesc "$md5sum")#g" \
 	-i PKGBUILD "$pkgname.install"
