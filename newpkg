@@ -24,7 +24,7 @@ octave_to_arch_license()
 	"GPL version 2")
 		echo GPL2
 		;;
-	"GPL version 2 or later")
+	"GPL version 2 or later" | "GPLv2+")
 		echo GPL
 		;;
 	"GPL version 3" | "GPL version 3 or later" | "GPLv3+")
