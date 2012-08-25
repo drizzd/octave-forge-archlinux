@@ -1,0 +1,56 @@
+# Maintainer: Clemens Buchacher <drizzd@aon.at>
+_pack=mechanics
+pkgname=octave-$_pack
+pkgver=10914
+pkgrel=1
+pkgdesc="Special functions including ellipitic functions, etc"
+arch=(any)
+url="http://octave.sourceforge.net/$_pack/"
+license=('GPL')
+groups=('octave-forge')
+depends=('octave>=2.9.7')
+conflicts=('octave-fixed')
+makedepends=('subversion')
+optdepends=()
+backup=()
+options=()
+install=octave-$_pack.install
+source=()
+noextract=()
+md5sums=()
+
+_svntrunk=("https://octave.svn.sourceforge.net/svnroot/octave/trunk/octave-forge")
+_svnmod=("main/$_pack")
+_target=$_pack-svn
+_archive=$_target-$pkgver.tar.gz
+
+build() {
+  cd "$srcdir"
+  msg "Connecting to SVN server...."
+
+  if [[ -d "$_pack/.svn" ]]; then
+    (cd "$_pack" && svn up -r "$pkgver")
+  else
+    svn co "$_svntrunk/$_svnmod" --config-dir ./ -r "$pkgver" "$_pack"
+  fi || { error "SVN checkout failed"; return 1; }
+
+  msg "SVN checkout done or server timeout"
+  msg "Starting build..."
+
+  rm -rf "$_target"
+  (
+    cd "$_pack"
+    svn export . ../"$_target"
+  )
+  tar czf "$_archive" "$_target"
+
+  rm -rf "builddir"
+  mkdir -p builddir
+  octave -q -f --eval "pkg build -verbose -nodeps builddir $_archive"
+}
+
+package() {
+  mkdir -p "$pkgdir/usr/share/octave/packages"
+  mkdir -p "$pkgdir/usr/lib/octave/packages"
+  cp "$srcdir/builddir"/*.tar.gz "$pkgdir/usr/share/octave/$_pack.tar.gz"
+}
