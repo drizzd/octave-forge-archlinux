@@ -15,7 +15,7 @@ geturl()
 
 sedesc()
 {
-	echo "$1" | sed -e 's/\(\.\|\/\|\*\|\[\|\]\|\\\)/\\&/g'
+	echo "$1" | sed -e 's/\(\&\|\.\|\/\|\*\|\[\|\]\|\\\)/\\&/g'
 }
 
 octave_to_arch_license()
