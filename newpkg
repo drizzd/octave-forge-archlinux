@@ -142,7 +142,7 @@ dfile=$(
 )
 description=$(
 	tar xzfO "$_archive" "$dfile" |
-	sed -n 's/^Description: //p'
+	sed -n 's/^Description: //; ta; d; :a; H; n; /^ / ba; g; s/\n//gp'
 )
 depends=$(tar xzfO "$_archive" "$dfile" | get_dep --octave Depends)
 makedepends=$(tar xzfO "$_archive" "$dfile" | get_dep BuildRequires)
