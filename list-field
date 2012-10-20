@@ -1,0 +1,24 @@
+#!/bin/sh
+
+sedesc()
+{
+	echo "$1" | sed -e 's/\(\&\|\.\|\/\|\*\|\[\|\]\|\\\)/\\&/g'
+}
+
+field=$1
+shift
+
+ls -1d octave-*/ |
+sed 's/^octave-//; s#/$##g' |
+grep -v '\-svn$' |
+while read x
+do
+	ls "octave-$x"/"$x"-*[0-9].tar.gz 2>/dev/null |
+	while read archive
+	do
+		desc=$(tar tzf "$archive" | grep "\<DESCRIPTION$")
+		tar xzfO "$archive" "$desc" |
+		sed -n "s/^$(sedesc "$field"): /$(sedesc "$x"): /p"
+	done
+done |
+uniq
