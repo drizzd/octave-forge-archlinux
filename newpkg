@@ -161,6 +161,14 @@ echo "version: $version"
 echo "depends: $depends"
 echo "license: $archlicense ($license)"
 
+# Truncate to maximum description length allowed by AUR
+limit=255
+if test $(echo -n "$description" | wc -c) -gt "$limit"
+then
+	description=$(echo "$description" | cut -b 1-"$(($limit-6))")
+	description="$description [...]"
+fi
+
 sed \
 	-e "s#@@NAME@@#$(sedesc "$_pack")#g" \
 	-e "s#@@VERSION@@#$(sedesc "$version")#g" \
