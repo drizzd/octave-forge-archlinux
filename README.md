@@ -9,11 +9,11 @@ PKGBUILD automatically. It detect the latest package version released on
 octave.sf.net and reads necessary configurations from the package's DESCRIPTION
 file.
 
-- To create a new package <pkg>: `./newpkg <pkg>`
+- To create a new package: `./newpkg <pkg>`
 
 The new package will be created in `octave-<pkg>/`.
 
-- To update a package <pkg>, I like to do this:
+- To update a package, I like to do this:
 
 Create new PKGBUILD from scratch.
 
