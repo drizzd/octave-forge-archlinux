@@ -2,7 +2,8 @@
 
 set -e
 
-for i in octave-miscellaneous octave-specfun octave-struct octave-optim \
+for i in octave-general octave-miscellaneous octave-specfun octave-struct \
+	octave-optim \
 	octave-audio octave-control octave-image octave-signal \
 	octave-communications octave-linear-algebra octave-mechanics \
 	octave-nnet octave-io octave-statistics octave-geometry \
