@@ -8,7 +8,7 @@
 
 _pack=octcdf
 pkgname=octave-$_pack
-pkgver=1.1.5
+pkgver=1.1.6
 pkgrel=1
 pkgdesc="A NetCDF interface for octave"
 arch=(any)
@@ -24,7 +24,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-md5sums=('cb0d95fc63665aab930741f12a1aa9a4')
+md5sums=('6cd17452658d2109af55a5beabcb388b')
 
 build() {
   cd "$srcdir"
