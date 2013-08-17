@@ -5,7 +5,7 @@ newpkg
 ------
 
 There is a large number of octave packages, and this script helps you create a
-PKGBUILD automatically. It detect the latest package version released on
+PKGBUILD automatically. It finds the latest package version released on
 octave.sf.net and reads necessary configurations from the package's DESCRIPTION
 file.
 
