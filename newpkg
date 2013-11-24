@@ -130,7 +130,7 @@ get_dep() {
 				package=$(echo "$package" | sed 's/-dev\(el\)\?$//')
 			fi
 			$first || echo -n " "
-			echo -n "'$package $version'" | sed 's/[ ()]//g'
+			echo -n "'$package $version'" | sed 's/ (optional)//g; s/[ ()]//g'
 			first=false
 		done
 	}
@@ -146,6 +146,7 @@ description=$(
 )
 depends=$(tar xzfO "$_archive" "$dfile" | get_dep --octave Depends)
 makedepends=$(tar xzfO "$_archive" "$dfile" | get_dep BuildRequires)
+optdepends=$(tar xzfO "$_archive" "$dfile" | get_dep SystemRequirements)
 license=$(
 	tar xzfO "$_archive" "$dfile" |
 	sed -n 's/^License: //p'
@@ -159,6 +160,8 @@ fi
 
 echo "version: $version"
 echo "depends: $depends"
+test -n "$makedepends" && echo "makedepends: $makedepends"
+test -n "$optdepends"  && echo "optdepends: $optdepends"
 echo "license: $archlicense ($license)"
 
 # Truncate to maximum description length allowed by AUR
@@ -176,5 +179,6 @@ sed \
 	-e "s#@@LICENSE@@#$(sedesc "$archlicense")#g" \
 	-e "s#@@DEPENDS@@#$(sedesc "$depends")#g" \
 	-e "s#@@MAKEDEPENDS@@#$(sedesc "$makedepends")#g" \
+	-e "s#@@OPTDEPENDS@@#$(sedesc "$optdepends")#g" \
 	-e "s#@@MD5SUMS@@#$(sedesc "$md5sum")#g" \
 	-i PKGBUILD "$pkgname.install"
