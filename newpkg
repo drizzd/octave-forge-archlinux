@@ -141,17 +141,15 @@ dfile=$(
 	grep "^[^/]*\(/\)\?\<DESCRIPTION$" |
 	head -n 1
 )
+dcontent=$(tar xzfO "$_archive" "$dfile" | sed 's/\r*$//')
 description=$(
-	tar xzfO "$_archive" "$dfile" |
+	echo "$dcontent" |
 	sed -n 's/^Description: //; ta; d; :a; H; n; /^ / ba; g; s/\n//gp'
 )
-depends=$(tar xzfO "$_archive" "$dfile" | get_dep --octave Depends)
-makedepends=$(tar xzfO "$_archive" "$dfile" | get_dep BuildRequires)
-optdepends=$(tar xzfO "$_archive" "$dfile" | get_dep SystemRequirements)
-license=$(
-	tar xzfO "$_archive" "$dfile" |
-	sed -n 's/^License: //p'
-)
+depends=$(echo "$dcontent" | get_dep --octave Depends)
+makedepends=$(echo "$dcontent" | get_dep BuildRequires)
+optdepends=$(echo "$dcontent" | get_dep SystemRequirements)
+license=$(echo "$dcontent" | sed -n 's/^License: //p')
 md5sum=$(md5sum "$_archive" | cut -f1 -d' ')
 
 if ! archlicense="$(try_convert "$license")"
