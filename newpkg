@@ -138,7 +138,8 @@ get_dep() {
 
 dfile=$(
 	tar tzf "$_archive" |
-	grep "\<DESCRIPTION$"
+	grep "^[^/]*\(/\)\?\<DESCRIPTION$" |
+	head -n 1
 )
 description=$(
 	tar xzfO "$_archive" "$dfile" |
