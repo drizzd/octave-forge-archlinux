@@ -130,7 +130,7 @@ get_dep() {
 				package=$(echo "$package" | sed 's/-dev\(el\)\?$//')
 			fi
 			$first || echo -n " "
-			echo -n "'$package $version'" | sed 's/ (optional)//g; s/[ ()]//g'
+			echo -n "'$package $version'" | sed 's/ (\?optional)\?//g; s/[ ()]//g'
 			first=false
 		done
 	}
