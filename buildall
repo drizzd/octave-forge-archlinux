@@ -28,11 +28,12 @@ then
 	rm -f */*"$PKGEXT"
 fi
 
-for i in general miscellaneous specfun struct optim audio control image \
-	signal communications linear-algebra mechanics nnet io statistics \
-	geometry queueing strings financial fpl msh bim database \
+for i in general miscellaneous specfun struct parallel optim audio control \
+	signal image communications linear-algebra geometry mechanics nnet \
+	io statistics \
+	queueing strings financial fpl splines msh bim database \
 	data-smoothing informationtheory java octcdf octclip octproj \
-	physicalconstants plot quaternion sockets splines symbolic nan
+	physicalconstants plot quaternion sockets symbolic nan
 do
 	pkgname="octave-$i"
 	(
@@ -46,7 +47,7 @@ do
 		if ! test -f "$pkg_file"
 		then
 			makepkg -s
-		fi
+		fi &&
 		sudo pacman --needed -U "$pkg_file"
-	)
+	) || exit 1
 done
