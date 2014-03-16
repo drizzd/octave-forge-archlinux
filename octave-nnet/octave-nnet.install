@@ -13,5 +13,5 @@ post_upgrade() {
 
 ## arg 1:  the old package version
 post_remove() {
-  echo "pkg prefix /usr/share/octave/packages /usr/lib/octave/packages; pkg uninstall $pkg" | octave --silent
+  echo "pkg prefix /usr/share/octave/packages /usr/lib/octave/packages; pkg uninstall $pkg; pkg rebuild -global" | octave --silent
 }
