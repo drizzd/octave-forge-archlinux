@@ -101,11 +101,15 @@ fi
 
 get_dep() {
 	assume_octave=
+	optional=
 	while test $# -gt 0
 	do
 		case $1 in
 		--octave)
 			assume_octave=YesPlease
+			;;
+		--optional)
+			optional=YesPlease
 			;;
 		*)
 			break
@@ -129,6 +133,13 @@ get_dep() {
 				# package.
 				package=$(echo "$package" | sed 's/-dev\(el\)\?$//')
 			fi
+			if echo "$version" | grep -q '\<optional\>'
+			then
+				test -n "$optional" || continue
+			else
+				test -z "$optional" || continue
+			fi
+
 			$first || echo -n " "
 			echo -n "'$package $version'" | sed 's/ (\?optional)\?//g; s/[ ()]//g'
 			first=false
@@ -147,8 +158,9 @@ description=$(
 	sed -n 's/^Description: //; ta; d; :a; H; n; /^ / ba; g; s/\n//gp'
 )
 depends=$(echo "$dcontent" | get_dep --octave Depends)
-makedepends=$(echo "$dcontent" | get_dep BuildRequires)
-optdepends=$(echo "$dcontent" | get_dep SystemRequirements)
+requires_pattern='\(BuildRequires\|SystemRequirements\)';
+makedepends=$(echo "$dcontent" | get_dep "$requires_pattern")
+optdepends=$(echo "$dcontent" | get_dep --optional "$requires_pattern")
 license=$(echo "$dcontent" | sed -n 's/^License: //p')
 md5sum=$(md5sum "$_archive" | cut -f1 -d' ')
 
