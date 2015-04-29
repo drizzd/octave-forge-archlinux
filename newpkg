@@ -2,7 +2,7 @@
 
 usage()
 {
-	echo "usage: $(basename $0) pack" >&2
+	echo "usage: $(basename $0) pack [version]" >&2
 }
 
 geturl()
@@ -69,12 +69,16 @@ fi
 
 _pack=$1
 pkgname=octave-$_pack
+version=$2
 
-version=$(
-	geturl - "http://octave.sourceforge.net/$_pack/index.html" |
-	sed -n 's/.*Package Version:.*<td>\([^<]\+\)<\/td>.*/\1/p' |
-	head -1
-)
+if test -z "$version"
+then
+	version=$(
+		geturl - "http://octave.sourceforge.net/$_pack/index.html" |
+		sed -n 's/.*Package Version:.*<td>\([^<]\+\)<\/td>.*/\1/p' |
+		head -1
+	)
+fi
 if test -z "$version"
 then
 	echo "error: could not determine package version" >&2
