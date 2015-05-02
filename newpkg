@@ -166,7 +166,6 @@ requires_pattern='\(BuildRequires\|SystemRequirements\)';
 makedepends=$(echo "$dcontent" | get_dep "$requires_pattern")
 optdepends=$(echo "$dcontent" | get_dep --optional "$requires_pattern")
 license=$(echo "$dcontent" | sed -n 's/^License: //p')
-md5sum=$(md5sum "$_archive" | cut -f1 -d' ')
 
 if ! archlicense="$(try_convert "$license")"
 then
@@ -195,5 +194,4 @@ sed \
 	-e "s#@@DEPENDS@@#$(sedesc "$depends")#g" \
 	-e "s#@@MAKEDEPENDS@@#$(sedesc "$makedepends")#g" \
 	-e "s#@@OPTDEPENDS@@#$(sedesc "$optdepends")#g" \
-	-e "s#@@MD5SUMS@@#$(sedesc "$md5sum")#g" \
 	-i PKGBUILD "$pkgname.install"

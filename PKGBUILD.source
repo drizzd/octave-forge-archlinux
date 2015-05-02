@@ -21,19 +21,49 @@ optdepends=(@@OPTDEPENDS@@)
 backup=()
 options=()
 install=$pkgname.install
-_archive=$_pack-$pkgver.tar.gz
-source=("http://downloads.sourceforge.net/octave/$_archive")
-noextract=("$_archive")
-md5sums=('@@MD5SUMS@@')
+source=("hg+http://hg.code.sf.net/p/octave/$_pack")
+md5sums=('SKIP')
+
+_get_revision() {
+  revision=$pkgver
+  if ! [ -n "$PKGVER_KEEP" ]
+  then
+    tag=$(hg parents --template '{latesttag}')
+    if [ "$tag" != null ]
+    then
+      revision="$tag"
+    fi
+  fi
+  printf "%s" "$revision"
+}
+
+_install_dir() {
+  src=$1
+  dst=$2
+  mkdir -p "$(dirname "$dst")"
+  cp -rT "$src" "$dst"
+}
+
+pkgver() {
+  cd "$_pack"
+  _get_revision
+}
+
+prepare() {
+  cd "$_pack"
+  revision=$pkgver
+  hg update "$revision"
+  hg archive --exclude '.hg*' "$srcdir/$_pack.tar.gz"
+}
 
 build() {
   cd "$srcdir"
   mkdir -p builddir
-  octave -q -f --eval "pkg build -verbose -nodeps builddir $_archive"
+  octave -q -f --eval "pkg build -verbose -nodeps builddir $_pack.tar.gz"
 }
 
 package() {
   mkdir -p "$pkgdir/usr/share/octave/packages"
   mkdir -p "$pkgdir/usr/lib/octave/packages"
-  cp "$srcdir/builddir/$_archive" "$pkgdir/usr/share/octave/$_pack.tar.gz"
+  cp "$srcdir"/builddir/$_pack-$pkgver.tar.gz "$pkgdir/usr/share/octave/$_pack.tar.gz"
 }
