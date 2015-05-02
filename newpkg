@@ -61,7 +61,7 @@ try_convert()
 	}
 }
 
-if test $# -ne 1
+if test $# -lt 1 -o $# -gt 2
 then
 	usage
 	exit 1
