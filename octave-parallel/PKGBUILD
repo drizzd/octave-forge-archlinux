@@ -8,14 +8,14 @@
 
 _pack=parallel
 pkgname=octave-$_pack
-pkgver=2.2.0
+pkgver=3.0.2
 pkgrel=1
 pkgdesc="Parallel execution package. See also package mpi, maintained by Carlo de Falco. "
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL3')
 groups=('octave-forge')
-depends=('octave>=3.4.0')
+depends=('octave>=3.8.0')
 makedepends=()
 optdepends=()
 backup=()
@@ -24,16 +24,31 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-md5sums=('8743e9dce4cd9c1ca9742b50f7e37548')
+md5sums=('5c17c41677c38702a3086c39571b12f0')
+
+_install_dir() {
+	src=$1
+	dst=$2
+	mkdir -p "$(dirname "$dst")"
+	cp -rT "$src" "$dst"
+}
 
 build() {
-  cd "$srcdir"
-  mkdir -p builddir
-  octave -q -f --eval "pkg build -verbose -nodeps builddir $_archive"
+	_prefix="$srcdir"/install_prefix
+	_archprefix="$srcdir"/install_archprefix
+	mkdir -p "$_prefix" "$_archprefix"
+	cd "$srcdir"
+	octave -q -f --eval "$(cat <<-EOF
+		pkg local_list octave_packages;
+		pkg prefix $_prefix $_archprefix;
+		pkg install -verbose -nodeps $_archive;
+		EOF
+		)"
 }
 
 package() {
-  mkdir -p "$pkgdir/usr/share/octave/packages"
-  mkdir -p "$pkgdir/usr/lib/octave/packages"
-  cp "$srcdir/builddir/$_archive" "$pkgdir/usr/share/octave/$_pack.tar.gz"
+	prefix=$pkgdir/usr/share/octave/packages
+	archprefix=$pkgdir/usr/lib/octave/packages
+	_install_dir "$srcdir"/install_prefix "$prefix"
+	_install_dir "$srcdir"/install_archprefix "$archprefix"
 }
