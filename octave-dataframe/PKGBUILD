@@ -6,16 +6,16 @@
 # new octave-forge PKGBUILDs or update existing ones. Patches welcome.
 #
 
-_pack=communications
+_pack=dataframe
 pkgname=octave-$_pack
-pkgver=1.2.1
+pkgver=1.1.0
 pkgrel=1
-pkgdesc="Digital Communications, Error Correcting Codes (Channel Code), Source Code functions, Modulation and Galois Fields"
+pkgdesc="Data manipulation toolbox similar to R data.frame"
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL3')
 groups=('octave-forge')
-depends=('octave>=3.4.0' 'octave-signal>=1.1.3')
+depends=('octave>=3.4.0')
 makedepends=()
 optdepends=()
 backup=()
@@ -24,7 +24,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-md5sums=('cf5ad84af0c3221199b2e04109946562')
+md5sums=('7357ec2162d1dd47a0d0fbc0e90d3f97')
 
 _install_dir() {
 	src=$1
