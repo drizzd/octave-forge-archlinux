@@ -47,7 +47,7 @@ build() {
 	)
 	_archive_patched=$_pack-$pkgver-patched.tar.gz
 	tar czf "$_archive_patched" "$_pack-$pkgver"
-	octave -q -f --eval "$(cat <<-EOF
+	octave-cli -q -f --eval "$(cat <<-EOF
 		pkg local_list octave_packages;
 		pkg prefix $_prefix $_archprefix;
 		pkg install -verbose -nodeps $_archive_patched;

@@ -29,7 +29,7 @@ md5sums=('3efcbb8bc911e7293d91c39bcf202f83')
 build() {
   cd "$srcdir"
   mkdir -p builddir
-  octave -q -f --eval "pkg build -verbose -nodeps builddir $_archive"
+  octave-cli -q -f --eval "pkg build -verbose -nodeps builddir $_archive"
 }
 
 package() {

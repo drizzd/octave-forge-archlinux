@@ -1,7 +1,7 @@
 _pack=miscellaneous
 
 post_install() {
-	octave -q -f --eval "pkg rebuild -global $_pack"
+	octave-cli -q -f --eval "pkg rebuild -global $_pack"
 }
 
 post_upgrade() {
@@ -9,5 +9,5 @@ post_upgrade() {
 }
 
 post_remove() {
-	octave -q -f --eval "pkg rebuild -global"
+	octave-cli -q -f --eval "pkg rebuild -global"
 }
