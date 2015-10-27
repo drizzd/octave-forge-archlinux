@@ -22,6 +22,7 @@ backup=()
 options=()
 install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
+_archive_patched=$_pack-$pkgver-patched.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_archive"
 		"fl_compose.patch")
 noextract=("$_archive")
@@ -36,11 +37,10 @@ _install_dir() {
 }
 
 prepare() {
-	gzip -d $_archive
-	tar -xvf ${_archive%.gz} fl-core/src/fl_compose.cc
+	cd "$srcdir"
+	tar xzf "$_archive"
 	patch -Np0 -i fl_compose.patch
-	tar -uf ${_archive%.gz} fl-core/src/fl_compose.cc
-	gzip ${_archive%.gz}
+	tar czf "$_archive_patched" "$_pack"
 }
 
 build() {
@@ -51,7 +51,7 @@ build() {
 	octave-cli -q -f --eval "$(cat <<-EOF
 		pkg local_list octave_packages;
 		pkg prefix $_prefix $_archprefix;
-		pkg install -verbose -nodeps $_archive;
+		pkg install -verbose -nodeps $_archive_patched;
 		EOF
 		)"
 }
