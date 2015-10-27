@@ -1,0 +1,20 @@
+#!/bin/sh
+
+PWD=$(pwd)
+pkgname=${PWD##*/}
+
+git init
+
+cat >> .gitignore << EOF
+*.tar.gz
+*.tar.xz
+pkg/
+src/
+EOF
+
+mksrcinfo
+
+git add .
+git commit -m "Initial commit"
+git remote add origin ssh://aur@aur.archlinux.org/${pkgname}.git
+git push -u origin master
