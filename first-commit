@@ -4,6 +4,7 @@ PWD=$(pwd)
 pkgname=${PWD##*/}
 
 git init
+git config core.autocrlf false
 
 cat >> .gitignore << EOF
 *.tar.gz
