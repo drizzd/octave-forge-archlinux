@@ -28,7 +28,7 @@ noextract=("$_archive")
 md5sums=('d7695f84cd61cbd795e629d6804a90d6')
 
 _octave_run() {
-	octave --no-history --no-init-file --no-window-system -q -f --eval "$*"
+	taskset -c 0 octave --no-history --no-init-file --no-window-system -q -f --eval "$*"
 }
 
 _install_dir() {
