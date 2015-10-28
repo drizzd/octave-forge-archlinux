@@ -1,0 +1,26 @@
+#!/bin/sh
+
+commit_orig=381b4eb
+commit_patched=a1ef161
+
+patch_install=/tmp/install.patch
+git diff ${commit_orig} ${commit_patched} octave-pkgname.install > ${patch_install}
+
+patch_pkgbuild=/tmp/pkgbuild.patch
+git diff ${commit_orig} ${commit_patched} PKGBUILD.source > ${patch_pkgbuild}
+
+SUBDIRS=$(find . -maxdepth 1 -mindepth 1 -type d -name '[^.]*')
+for sub in $SUBDIRS
+do
+	orig_install=${sub}/${sub##*/}.install
+	if test -f ${orig_install}
+	then
+		patch ${orig_install} ${patch_install}
+	fi
+
+	orig_pkgbuild=${sub}/PKGBUILD
+	if test -f ${orig_pkgbuild}
+	then
+		patch ${orig_pkgbuild} ${patch_pkgbuild}
+	fi
+done

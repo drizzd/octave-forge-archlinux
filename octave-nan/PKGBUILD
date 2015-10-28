@@ -8,8 +8,8 @@
 
 _pack=nan
 pkgname=octave-$_pack
-pkgver=2.7.4
-pkgrel=1
+pkgver=2.8.1
+pkgrel=2
 pkgdesc="A statistics and machine learning toolbox for data with and w/o missing values"
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
@@ -19,21 +19,40 @@ depends=('octave>3.2.0')
 makedepends=()
 optdepends=()
 backup=()
-options=(!makeflags)
+options=()
 install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-md5sums=('5c7dfe9b8f29da7e289f8bb772230b72')
+md5sums=('7f6933ed8e6898034ab975c9c466836d')
+
+_octave_run() {
+	octave --no-history --no-init-file --no-window-system -q -f --eval "$*"
+}
+
+_install_dir() {
+	src=$1
+	dst=$2
+	mkdir -p "$(dirname "$dst")"
+	cp -rT "$src" "$dst"
+}
 
 build() {
-  cd "$srcdir"
-  mkdir -p builddir
-  octave -q -f --eval "pkg build -verbose -nodeps builddir $_archive"
+	_prefix="$srcdir"/install_prefix
+	_archprefix="$srcdir"/install_archprefix
+	mkdir -p "$_prefix" "$_archprefix"
+	cd "$srcdir"
+	_octave_run "$(cat <<-EOF
+		pkg local_list octave_packages;
+		pkg prefix $_prefix $_archprefix;
+		pkg install -verbose -nodeps $_archive;
+		EOF
+		)"
 }
 
 package() {
-  mkdir -p "$pkgdir/usr/share/octave/packages"
-  mkdir -p "$pkgdir/usr/lib/octave/packages"
-  cp "$srcdir/builddir/$_archive" "$pkgdir/usr/share/octave/$_pack.tar.gz"
+	prefix=$pkgdir/usr/share/octave/packages
+	archprefix=$pkgdir/usr/lib/octave/packages
+	_install_dir "$srcdir"/install_prefix "$prefix"
+	_install_dir "$srcdir"/install_archprefix "$archprefix"
 }

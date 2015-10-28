@@ -1,0 +1,25 @@
+#!/bin/sh
+
+usage()
+{
+	echo "usage: $(basename $0) pack [version]" >&2
+}
+
+if test $# -lt 1 -o $# -gt 2
+then
+	usage
+	exit 1
+fi
+
+_pack=$1
+pkgname=octave-$_pack
+version=$2
+
+if test -z "$version"
+then
+	version=$(sed -n 's/^pkgver=\([0-9.]\+\)/\1/p' $pkgname/PKGBUILD)
+fi
+
+
+git add $pkgname
+git commit -m "$_pack $version"
