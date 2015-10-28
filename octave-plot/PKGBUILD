@@ -9,7 +9,7 @@
 _pack=plot
 pkgname=octave-$_pack
 pkgver=1.1.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Additional ploting tools for Octave."
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
@@ -45,7 +45,7 @@ build() {
 	_octave_run "$(cat <<-EOF
 		pkg local_list octave_packages;
 		pkg prefix $_prefix $_archprefix;
-		pkg install -verbose -nodeps $_archive;
+		pkg install -verbose -nodeps -noauto $_archive;
 		EOF
 		)"
 }
