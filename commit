@@ -2,7 +2,7 @@
 
 usage()
 {
-	echo "usage: $(basename $0) pack" >&2
+	echo "usage: $(basename $0) pack [version]" >&2
 }
 
 if test $# -lt 1 -o $# -gt 2
