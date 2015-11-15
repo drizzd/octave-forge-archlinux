@@ -2,7 +2,7 @@
 
 usage()
 {
-	echo "usage: $(basename $0) pack [version]" >&2
+	echo "usage: $(basename $0) [-f] pack [version]" >&2
 }
 
 geturl()
@@ -61,6 +61,20 @@ try_convert()
 	}
 }
 
+force=
+while test $# -gt 0
+do
+	case $1 in
+		-f)
+			force=t
+			;;
+		*)
+			break
+			;;
+	esac
+	shift
+done
+
 if test $# -lt 1 -o $# -gt 2
 then
 	usage
@@ -85,13 +99,13 @@ then
 	exit 1
 fi
 
-if test -e "$pkgname"
+if test -z "$force" -a -e "$pkgname"
 then
 	echo "error: directory already exists: $pkgname" >&2
 	exit 1
 fi
 
-mkdir "$pkgname"
+mkdir -p "$pkgname"
 cp PKGBUILD.source "$pkgname/PKGBUILD"
 cp octave-pkgname.install "$pkgname/$pkgname.install"
 
@@ -129,7 +143,10 @@ get_dep() {
 		first=true
 		while read package version
 		do
-			if test -n "$assume_octave" -a "$package" != octave
+			if printf "%s" "$package" | grep -qi "^octave$"
+			then
+				package=octave
+			elif test -n "$assume_octave"
 			then
 				package=octave-$package
 			else
